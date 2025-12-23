@@ -1,0 +1,27 @@
+# FSI Academic System - Backend Dependencies
+# Core Framework
+fastapi
+uvicorn[standard]
+
+# Database
+sqlmodel
+sqlalchemy
+psycopg[binary]
+alembic
+
+# Data Validation
+pydantic
+pydantic-settings
+python-dotenv
+email-validator
+
+# File Upload
+python-multipart
+
+# Security
+passlib[bcrypt]
+bcrypt
+python-jose
+
+# Utilities
+tenacity

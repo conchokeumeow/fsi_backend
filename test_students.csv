@@ -1,0 +1,6 @@
+student_id,fullname,dob,gpa,class_id
+SV001,Nguyen Van A,2000-01-15,3.5,
+SV002,Tran Thi B,2001-05-20,3.8,
+SV003,Le Van C,15/08/2000,2.9,
+SV004,Pham Thi D,,3.2,
+SV005,Hoang Van E,2002-12-01,,
