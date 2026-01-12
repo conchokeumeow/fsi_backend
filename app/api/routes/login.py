@@ -21,6 +21,18 @@ def login_access_token(
     """
     OAuth2 compatible token login, get an access token for future requests
     """
+    if not form_data.username or not form_data.username.strip():
+        raise HTTPException(
+            status_code=422,
+            detail="Username must not be empty"
+        )
+
+    if not form_data.password or not form_data.password.strip():
+        raise HTTPException(
+            status_code=422,
+            detail="Password must not be empty"
+        )
+    
     service = UserService(session)
     user = service.authenticate(email=form_data.username, password=form_data.password)
     if not user:
