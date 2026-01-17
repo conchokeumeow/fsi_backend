@@ -29,16 +29,23 @@ if config.config_file_name is not None:
 from app.core.config import settings  # noqa
 
 # Models import - import all models here for Alembic to detect
-from app.models.user_model import User  # noqa
-from app.models.role_model import Role  # noqa
+from app.models.role import Role  # noqa
+from app.models.user import User  # noqa
+from app.models.major import Major  # noqa
+from app.models.cohort import Cohort  # noqa
 from app.models.class_model import Class  # noqa
-from app.models.student_model import Student  # noqa
-from app.models.major_model import Major  # noqa
-from app.models.intake_model import Intake  # noqa
-from app.models.course_model import Course  # noqa
-from app.models.score_model import Score  # noqa
-from app.models.notification_model import Notification  # noqa
-from app.models.upload_history_model import UploadHistory  # noqa
+from app.models.semester import Semester  # noqa
+from app.models.subject import Subject  # noqa
+from app.models.student import Student  # noqa
+from app.models.certificate import Certificate  # noqa
+from app.models.score import Score  # noqa
+from app.models.training_program import TrainingProgram  # noqa
+from app.models.program_subject import ProgramSubject  # noqa
+from app.models.program_certificate import ProgramCertificate  # noqa
+from app.models.graduation_criteria import GraduationCriteria  # noqa
+from app.models.criteria_subject import CriteriaSubject  # noqa
+from app.models.criteria_certificate import CriteriaCertificate  # noqa
+from app.models.credential import Credential  # noqa
 
 target_metadata = SQLModel.metadata
 

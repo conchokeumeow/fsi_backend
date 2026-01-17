@@ -7,8 +7,8 @@ from sqlmodel import SQLModel, select, Session
 from app.core.config import settings
 from app.core.db import engine
 from app.core.security import get_password_hash
-from app.models.role_model import Role
-from app.models.user_model import User
+from app.models.role import Role
+from app.models.user import User
 
 
 def create_tables():
@@ -16,18 +16,7 @@ def create_tables():
     print("🔨 Creating database tables...")
     
     # Import all models để SQLModel biết cần tạo tables nào
-    from app.models import (
-        class_model,
-        course_model,
-        intake_model,
-        major_model,
-        notification_model,
-        role_model,
-        score_model,
-        student_model,
-        upload_history_model,
-        user_model,
-    )
+    import app.models  # This imports all models from __init__.py
     
     # Create all tables
     SQLModel.metadata.create_all(engine)
@@ -50,14 +39,14 @@ def create_default_roles():
         # Create default roles
         roles = [
             Role(
-                id=1,
-                role_name="Admin",
-                description="Administrator with full system access"
+                role_id=1,
+                name="Admin",
+                is_superuser=True
             ),
             Role(
-                id=2,
-                role_name="Teacher",
-                description="Teacher with limited access to manage students and grades"
+                role_id=2,
+                name="Teacher",
+                is_superuser=False
             ),
         ]
         
@@ -75,24 +64,24 @@ def create_superuser():
     with Session(engine) as session:
         # Check if superuser already exists
         result = session.exec(
-            select(User).where(User.email == settings.FIRST_SUPERUSER)
+            select(User).where(User.username == settings.FIRST_SUPERUSER_USERNAME)
         )
         existing_user = result.first()
         
         if existing_user:
-            print(f"ℹ️  Superuser already exists: {settings.FIRST_SUPERUSER}\n")
+            print(f"ℹ️  Superuser already exists: {settings.FIRST_SUPERUSER_USERNAME}\n")
             return
         
         # Validate required settings
-        if not settings.FIRST_SUPERUSER or not settings.FIRST_SUPERUSER_PASSWORD:
-            print("❌ ERROR: FIRST_SUPERUSER and FIRST_SUPERUSER_PASSWORD must be set in .env file")
+        if not settings.FIRST_SUPERUSER_USERNAME or not settings.FIRST_SUPERUSER_PASSWORD:
+            print("❌ ERROR: FIRST_SUPERUSER_USERNAME and FIRST_SUPERUSER_PASSWORD must be set in .env file")
             return
         
         # Create superuser
         superuser = User(
-            email=settings.FIRST_SUPERUSER,
-            fullname=settings.FIRST_SUPERUSER_NAME or "Admin User",
-            hashed_password=get_password_hash(settings.FIRST_SUPERUSER_PASSWORD),
+            username=settings.FIRST_SUPERUSER_USERNAME,
+            password_hash=get_password_hash(settings.FIRST_SUPERUSER_PASSWORD),
+            email=settings.FIRST_SUPERUSER_EMAIL,
             role_id=1,  # Admin role
             is_active=True,
         )
@@ -102,8 +91,8 @@ def create_superuser():
         session.refresh(superuser)
         
         print(f"✅ Superuser created successfully!")
+        print(f"   Username: {superuser.username}")
         print(f"   Email: {superuser.email}")
-        print(f"   Name: {superuser.fullname}")
         print(f"   Role: Admin\n")
 
 

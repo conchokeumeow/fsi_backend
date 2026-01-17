@@ -1,24 +1,38 @@
-# Import models
-from app.models.user_model import User
-from app.models.role_model import Role
-from app.models.major_model import Major
-from app.models.intake_model import Intake
-from app.models.class_model import Class
-from app.models.student_model import Student
-from app.models.course_model import Course
-from app.models.score_model import Score
-from app.models.notification_model import Notification
-from app.models.upload_history_model import UploadHistory
+# Import all models for Alembic auto-detection and relationship resolution
+from .role import Role
+from .user import User
+from .major import Major
+from .cohort import Cohort
+from .class_model import Class
+from .semester import Semester
+from .subject import Subject
+from .student import Student
+from .certificate import Certificate
+from .score import Score
+from .training_program import TrainingProgram
+from .program_subject import ProgramSubject
+from .program_certificate import ProgramCertificate
+from .graduation_criteria import GraduationCriteria
+from .criteria_subject import CriteriaSubject
+from .criteria_certificate import CriteriaCertificate
+from .credential import Credential
 
 __all__ = [
-    "User",
     "Role",
+    "User",
     "Major",
-    "Intake",
+    "Cohort",
     "Class",
+    "Semester",
+    "Subject",
     "Student",
-    "Course",
+    "Certificate",
     "Score",
-    "Notification",
-    "UploadHistory",
+    "TrainingProgram",
+    "ProgramSubject",
+    "ProgramCertificate",
+    "GraduationCriteria",
+    "CriteriaSubject",
+    "CriteriaCertificate",
+    "Credential",
 ]

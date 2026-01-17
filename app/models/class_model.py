@@ -1,24 +1,21 @@
-from typing import TYPE_CHECKING, List, Optional
-from sqlmodel import Field, Relationship, SQLModel
+from sqlmodel import Field, SQLModel, Relationship
+from typing import Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from app.models.user_model import User
-    from app.models.major_model import Major
-    from app.models.intake_model import Intake
-    from app.models.student_model import Student
+    from .cohort import Cohort
+    from .major import Major
+    from .student import Student
+
 
 class Class(SQLModel, table=True):
-    __tablename__ = "class"
-    
-    class_id: int = Field(primary_key=True)
-    class_name: str = Field(max_length=255, unique=True)
-    major_id: Optional[int] = Field(default=None, foreign_key="major.major_id")
-    user_id: Optional[int] = Field(default=None, foreign_key="users.user_id")  # Teacher
-    intake_id: Optional[int] = Field(default=None, foreign_key="intake.intake_id")
-    
-    # Relationships
-    major: Optional["Major"] = Relationship(back_populates="classes")
-    user: Optional["User"] = Relationship(back_populates="classes")  # Teacher
-    intake: Optional["Intake"] = Relationship(back_populates="classes")
-    students: List["Student"] = Relationship(back_populates="class_")
+    __tablename__ = "classes"
 
+    class_id: int = Field(default=None, primary_key=True)
+    name: str = Field(unique=True, index=True)
+    cohort_id: Optional[int] = Field(default=None, foreign_key="cohorts.cohort_id")
+    major_id: Optional[int] = Field(default=None, foreign_key="majors.major_id")
+
+    # Relationships
+    cohort: Optional["Cohort"] = Relationship(back_populates="classes")
+    major: Optional["Major"] = Relationship(back_populates="classes")
+    students: list["Student"] = Relationship(back_populates="class_")
