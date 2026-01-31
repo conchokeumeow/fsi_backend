@@ -17,6 +17,8 @@ email-validator
 
 # File Upload
 python-multipart
+pandas
+openpyxl
 
 # Security
 passlib[bcrypt]
