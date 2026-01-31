@@ -11,8 +11,13 @@ class Course(SQLModel, table=True):
     
     course_id: int = Field(primary_key=True)
     course_name: str = Field(max_length=255)
-    tcdh: Optional[str] = Field(default=None, max_length=50)  # Tín chỉ đại học
-    is_bb: Optional[bool] = Field(default=False)  # Bắt buộc
+    
+    # Tên hiển thị dùng để khớp khi import điểm. 
+    # Định dạng chuẩn: "Tên môn (số tín chỉ)". Ví dụ: "Cơ sở dữ liệu (3)"
+    course_display_name: Optional[str] = Field(default=None, max_length=255, index=True) 
+    
+    tcdh: Optional[str] = Field(default=None, max_length=50)  # Số tín chỉ
+    is_bb: Optional[bool] = Field(default=False)  # Môn bắt buộc
     major_id: Optional[int] = Field(default=None, foreign_key="major.major_id")
     intake_id: Optional[int] = Field(default=None, foreign_key="intake.intake_id")
     
